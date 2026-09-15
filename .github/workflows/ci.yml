@@ -62,6 +62,11 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ vars.AWS_REGION }}
 
-      # Step 6: Build Docker image
+      # Step 6: Login to Amazon ECR
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      # Step 7: Build Docker image
       - name: Build Docker image
         run: docker build -t account-service:${{ github.sha }} .
